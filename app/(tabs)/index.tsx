@@ -1,13 +1,11 @@
 import { useRouter } from "expo-router";
-import { View } from "react-native";
-import MyButton from "../components/MyButton";
+import { Text, View } from "react-native";
+import MyButton from "../../components/MyButton";
 
 export default function Index() {
   const router = useRouter();
 
-  const onMyBtnClick = () => {
-    router.navigate("/signup");
-  };
+  
   return (
     <View
       style={{
@@ -16,7 +14,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <MyButton title={"continue"} onPress={onMyBtnClick}></MyButton>
+      <Text>Home</Text>
     </View>
   );
 }

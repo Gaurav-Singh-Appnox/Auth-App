@@ -1,6 +1,11 @@
 import { Text, TouchableOpacity, View } from "react-native";
 
-const MyButton = ({ title, onPress }) => {
+type props = {
+  title: string;
+  onPress: () => void;
+};
+
+const MyButton = ({ title, onPress }: props) => {
   return (
     <View>
       <TouchableOpacity

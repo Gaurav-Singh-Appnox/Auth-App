@@ -1,5 +1,4 @@
 import { useRouter } from "expo-router";
-import React from "react";
 import { TextInput, View } from "react-native";
 import MyButton from "../components/MyButton";
 
@@ -7,8 +6,9 @@ const Login = () => {
   const router = useRouter();
 
   const onMyBtnClick = () => {
-    router.navigate("/");
+    router.navigate("index");
   };
+
   return (
     <View
       style={{
@@ -18,26 +18,29 @@ const Login = () => {
         alignItems: "center",
       }}
     >
-      <View style={{ padding: 20, gap: 20 ,width:"80%"}}>
+      <View style={{ padding: 20, width: "80%" }}>
         <TextInput
-          placeholder="enter your email"
+          placeholder="Enter your email"
           style={{
             borderWidth: 1,
             height: 50,
             paddingHorizontal: 20,
             borderRadius: 10,
+            marginBottom: 20,
           }}
         />
         <TextInput
-          placeholder="enter your password"
+          placeholder="Enter your password"
+          secureTextEntry={true}
           style={{
             borderWidth: 1,
             height: 50,
             paddingHorizontal: 20,
             borderRadius: 10,
+            marginBottom: 20,
           }}
         />
-        <MyButton title={"login"} onPress={onMyBtnClick}></MyButton>
+        <MyButton title={"Login"} onPress={onMyBtnClick} />
       </View>
     </View>
   );
