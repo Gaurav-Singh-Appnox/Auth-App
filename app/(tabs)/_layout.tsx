@@ -3,6 +3,7 @@ import { Tabs } from "expo-router";
 
 export default function TabLayout() {
   return (
+    
     <Tabs>
       <Tabs.Screen
         name="index"
@@ -37,8 +38,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          headerShown: false,
-          title: "Profile",
+          tabBarLabel: "Account", // This is the tab label
+          headerTitle: "My Account", // This changes the title in the header
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="user-circle" color={color} />
           ),

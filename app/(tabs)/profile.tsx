@@ -1,11 +1,21 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../store/slicer/UserSlice";
 
 const Profile = () => {
+  const token = useSelector((state: any) => state.auth.token);
+  console.log(token);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    console.log("->");
+    
+    dispatch(logOut());
+  };
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
       <View
         style={{
           height: 200,
@@ -49,21 +59,34 @@ const Profile = () => {
               justifyContent: "center",
             }}
           >
-            <TouchableOpacity style={{ marginBottom: 10 }}>
-              <Link href="/login" style={{ color: "white", fontSize: 18 }}>
-                Login
-              </Link>
-            </TouchableOpacity>
+            {!token ? (
+              <>
+                <TouchableOpacity style={{ marginBottom: 10 }}>
+                  <Link href="/login" style={{ color: "white", fontSize: 18 }}>
+                    Login
+                  </Link>
+                </TouchableOpacity>
 
-            <TouchableOpacity>
-              <Link href="/signup" style={{ color: "white", fontSize: 18 }}>
-                SignUp
-              </Link>
-            </TouchableOpacity>
+                <TouchableOpacity>
+                  <Link href="/signup" style={{ color: "white", fontSize: 18 }}>
+                    SignUp
+                  </Link>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <TouchableOpacity
+                onPress={handleLogout}
+                style={{ marginBottom: 10 }}
+              >
+                <Text style={{ color: "white", fontWeight: "700" }}>
+                  Log Out
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
