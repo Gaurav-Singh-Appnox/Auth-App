@@ -7,6 +7,7 @@ export default function RootLayout() {
     <Provider store={store}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="'./cart.tsx" />
       </Stack>
     </Provider>
   );

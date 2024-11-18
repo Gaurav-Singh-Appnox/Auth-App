@@ -3,7 +3,6 @@ import { Tabs } from "expo-router";
 
 export default function TabLayout() {
   return (
-    
     <Tabs>
       <Tabs.Screen
         name="index"
@@ -11,37 +10,37 @@ export default function TabLayout() {
           headerShown: false,
           title: "Home",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            <FontAwesome size={24} name="home" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="shop"
         options={{
           headerShown: false,
-          title: "Explore",
+          title: "Shop",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="compass" color={color} />
+            <FontAwesome size={24} name="shopping-bag" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="search"
+        name="community"
         options={{
           headerShown: false,
-          title: "Explore",
+          title: "Community",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="search" color={color} />
+            <FontAwesome size={24} name="users" color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          tabBarLabel: "Account", // This is the tab label
-          headerTitle: "My Account", // This changes the title in the header
+          tabBarLabel: "Account",
+          headerTitle: "My Account",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="user-circle" color={color} />
+            <FontAwesome size={24} name="user-circle" color={color} />
           ),
         }}
       />

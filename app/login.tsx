@@ -6,7 +6,7 @@ import { Control, Controller, useForm } from "react-hook-form";
 import { ActivityIndicator, Text, TextInput, View } from "react-native";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import MyButton from "../components/MyButton";
+import MyButton from "../components/common/MyButton";
 import { setUser } from "../store/slicer/UserSlice";
 
 type FormData = {

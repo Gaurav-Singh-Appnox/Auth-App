@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Control, Controller, useForm } from "react-hook-form";
 import { ActivityIndicator, Text, TextInput, View } from "react-native";
 import * as yup from "yup";
-import MyButton from "../components/MyButton";
+import MyButton from "../components/common/MyButton";
 
 type FormData = {
   fname: string;

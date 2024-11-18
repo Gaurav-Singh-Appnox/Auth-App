@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const explore = () => {
+const community = () => {
   return (
     <View
       style={{
@@ -11,9 +11,9 @@ const explore = () => {
         backgroundColor: "aliceblue",
       }}
     >
-      <Text>explore</Text>
+      <Text>community</Text>
     </View>
   );
 };
 
-export default explore;
+export default community;
