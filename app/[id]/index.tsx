@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Image } from "react-native-elements";
 import { useDispatch, useSelector } from "react-redux";
 import { productData } from "../../constant/data";
 import { addToCart } from "../../store/slicer/Cart";
@@ -30,6 +31,7 @@ const ProductDetail = () => {
         id: product?.id,
         name: product?.model,
         price: product?.price,
+        img: product?.img,
         quantity,
       })
     );
@@ -72,30 +74,35 @@ const ProductDetail = () => {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Product Details</Text>
         <View style={styles.cartContainer}>
-            <TouchableOpacity onPress={handleCartNavigate}>
-              <FontAwesome
-                name="shopping-cart"
-                size={24}
-                color="#555"
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-            <Text>{cartItems.length}</Text>
-          </View>
+          <TouchableOpacity onPress={handleCartNavigate}>
+            <FontAwesome
+              name="shopping-cart"
+              size={24}
+              color="#555"
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+          <Text>{cartItems.length}</Text>
+        </View>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.productInfo}>
-          <Text style={styles.brand}>{product.brand}</Text>
-          <Text style={styles.model}>{product.model}</Text>
-          <Text style={styles.price}>${product.price}</Text>
+        <View style={styles.imgContainer}>
+          <Image
+            source={product.img}
+            style={{ width: "100%", height: "100%" }}
+            resizeMode="contain"
+          />
         </View>
 
         <View style={styles.detailsSection}>
           <Text style={styles.sectionTitle}>Product Details</Text>
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Brand:</Text>
-            <Text style={styles.detailValue}>{product.brand}</Text>
+            <Text style={styles.detailValue}>
+              {product.brand}
+              {product.img}
+            </Text>
           </View>
           <View style={styles.detailRow}>
             <Text style={styles.detailLabel}>Model:</Text>
@@ -278,6 +285,10 @@ const styles = StyleSheet.create({
   cartContainer: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  imgContainer: {
+    width: "100%",
+    height: 300,
   },
 });
 

@@ -1,6 +1,8 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -11,10 +13,25 @@ import { SearchBar } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useSelector } from "react-redux";
 
+const images = [
+  require("../../assets/images/HomeBanner/suhanakhand.jpeg"),
+  require("../../assets/images/HomeBanner/vivov40e.jpg"),
+  require("../../assets/images/HomeBanner/xfold.jpg"),
+];
+
 export default function Index() {
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const cartItems = useSelector((state) => state.cart.items);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSearch = (value) => {
     setSearch(value);
@@ -26,6 +43,7 @@ export default function Index() {
 
   return (
     <ScrollView style={styles.container}>
+      {/* Search Bar */}
       <View style={styles.searchBarContainer}>
         <SearchBar
           placeholder="Search..."
@@ -37,16 +55,15 @@ export default function Index() {
         />
         {/* Icons */}
         <View style={styles.iconsContainer}>
-          <TouchableOpacity onPress={() => console.log("Message Icon Pressed")}>
-            <FontAwesome
-              name="envelope"
-              size={24}
-              color="#555"
-              style={styles.icon}
-            />
-          </TouchableOpacity>
           <View style={styles.cartContainer}>
-            <TouchableOpacity onPress={handleCart}>
+            <TouchableOpacity
+              onPress={handleCart}
+              style={{
+                flexDirection: "row",
+                position: "relative",
+                paddingVertical: 10,
+              }}
+            >
               <FontAwesome
                 name="shopping-cart"
                 size={24}
@@ -54,9 +71,39 @@ export default function Index() {
                 style={styles.icon}
               />
             </TouchableOpacity>
-            <Text>{cartItems.length}</Text>
+            <View
+              style={{
+                height: 20,
+                width: 20,
+                position: "absolute",
+                top: 1,
+                left: "50%",
+                zIndex: 2,
+                backgroundColor: "red",
+                borderRadius: 20,
+                alignContent: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ textAlign: "center" }}>{cartItems.length}</Text>
+            </View>
           </View>
+          <TouchableOpacity onPress={() => console.log("Message Icon Pressed")}>
+            <MaterialCommunityIcons
+              name="message-processing-outline"
+              size={24}
+              color="#555"
+              style={styles.icon}
+            />
+          </TouchableOpacity>
         </View>
+      </View>
+
+      <View style={styles.carouselContainer}>
+        <Image
+          source={images[currentImageIndex]}
+          style={styles.carouselImage}
+        />
       </View>
     </ScrollView>
   );
@@ -82,7 +129,9 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     backgroundColor: "#f0f0f0",
+    height: 40,
     borderRadius: 20,
+    paddingHorizontal: 10,
   },
   iconsContainer: {
     flexDirection: "row",
@@ -92,8 +141,20 @@ const styles = StyleSheet.create({
   icon: {
     marginHorizontal: 10,
   },
-  cartContainer:{
-    flexDirection:"row",
-    alignItems:"center",
-  }
+  cartContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  carouselContainer: {
+    width: "100%",
+    height: 200,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "red",
+  },
+  carouselImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
 });

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Image } from "react-native-elements";
 import { useSelector } from "react-redux";
 import { productData } from "../../constant/data";
 
@@ -22,13 +23,16 @@ const Shop = () => {
   };
 
   // Creating categories dynamically from product data
-  const categories = ["All", ...new Set(productData.map((item) => item.brand))];
+  const categories = [
+    "All",
+    ...new Set(productData.map((item) => item.series)),
+  ];
 
   // Filtering products based on selected category
   const filteredProducts =
     selectedCategory === "All"
       ? productData
-      : productData.filter((item) => item.brand === selectedCategory);
+      : productData.filter((item) => item.series === selectedCategory);
 
   const handleProductPress = (productId: string | number) => {
     router.push({
@@ -42,16 +46,16 @@ const Shop = () => {
       <View style={styles.header}>
         <Text style={styles.headerText}>Shop</Text>
         <View style={styles.cartContainer}>
-            <TouchableOpacity onPress={handleCart}>
-              <FontAwesome
-                name="shopping-cart"
-                size={24}
-                color="#555"
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-            <Text>{cartItems.length}</Text>
-          </View>
+          <TouchableOpacity onPress={handleCart}>
+            <FontAwesome
+              name="shopping-cart"
+              size={24}
+              color="#555"
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+          <Text>{cartItems.length}</Text>
+        </View>
       </View>
 
       <View style={styles.container}>
@@ -86,6 +90,11 @@ const Shop = () => {
                 style={styles.productCard}
                 onPress={() => handleProductPress(product.id)}
               >
+                <Image
+                  source={product.img }
+                  style={styles.productImage}
+                  resizeMode="contain"
+                />
                 <Text style={styles.productName}>
                   {product.brand} {product.model}
                 </Text>
@@ -164,23 +173,33 @@ const styles = StyleSheet.create({
   },
   productCard: {
     width: "48%",
-    backgroundColor: "aliceblue",
-    padding: 15,
-    borderRadius: 5,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-    elevation: 3,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    overflow: "hidden",
+    marginBottom: 15,
+    elevation: 4,
+  },
+  productImage: {
+    width: "100%",
+    height: 120,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  productDetails: {
+    padding: 10,
   },
   productName: {
     fontSize: 16,
     fontWeight: "bold",
+    color: "#333",
+    marginBottom: 5,
+    textAlign:"center",
+    marginTop:4,
   },
   productPrice: {
     fontSize: 14,
-    color: "#555",
+    color: "#888",
+    textAlign:"center",
   },
   icon: {
     marginHorizontal: 10,

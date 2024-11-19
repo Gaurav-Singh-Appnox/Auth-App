@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createSlice } from "@reduxjs/toolkit";
 
 // Initial state for the cart
 const initialState = {
-  items: [], 
-  totalQuantity: 0, 
-  totalAmount: 0, 
+  items: [],
+  totalQuantity: 0,
+  totalAmount: 0,
 };
 
 // saving in localstorage
@@ -17,15 +17,14 @@ const saveCartToStorage = async (cart) => {
   }
 };
 
-
 const cart = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addToCart: (state, action) => {
-        console.log(action.payload)
+      console.log(action.payload);
       const { id, name, price, quantity = 1 } = action.payload;
-        //check if item already  exist
+      //check if item already  exist
       const existingItem = state.items.find((item) => item.id === id);
 
       if (existingItem) {
