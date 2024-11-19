@@ -23,7 +23,7 @@ const cart = createSlice({
   reducers: {
     addToCart: (state, action) => {
       console.log(action.payload);
-      const { id, name, price, quantity = 1 } = action.payload;
+      const { id, name, price, quantity = 1 ,img} = action.payload;
       //check if item already  exist
       const existingItem = state.items.find((item) => item.id === id);
 
@@ -37,6 +37,7 @@ const cart = createSlice({
           price,
           quantity,
           totalPrice: price * quantity,
+          img
         });
       }
       state.totalQuantity += quantity;

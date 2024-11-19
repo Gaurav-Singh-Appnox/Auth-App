@@ -85,7 +85,7 @@ export default function Index() {
                 justifyContent: "center",
               }}
             >
-              <Text style={{ textAlign: "center" }}>{cartItems.length}</Text>
+              <Text style={{ textAlign: "center",color:"white" }}>{cartItems.length}</Text>
             </View>
           </View>
           <TouchableOpacity onPress={() => console.log("Message Icon Pressed")}>

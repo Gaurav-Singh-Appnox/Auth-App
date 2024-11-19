@@ -1,6 +1,9 @@
+import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -8,8 +11,7 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../store/slicer/Cart"; // Adjust import path based on your folder structure
-import { useRouter } from "expo-router";
+import { addToCart, removeFromCart } from "../store/slicer/Cart";
 
 const Cart = () => {
   const navigation = useNavigation();
@@ -34,6 +36,9 @@ const Cart = () => {
       dispatch(removeFromCart({ id: item.id }));
     }
   };
+  const handleRemoveItem = (item) => {
+    dispatch(removeFromCart({ id: item.id }));
+  };
 
   // Calculate total cost and breakdown
   const calculateTotal = () => {
@@ -45,7 +50,7 @@ const Cart = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}>
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -62,52 +67,58 @@ const Cart = () => {
           </View>
         ) : (
           cartItems.map((item) => (
-            <TouchableOpacity onPress={(()=>handleProductPress(item.id))}>
-              <View key={item.id} style={styles.cartItem}>
-                <View style={styles.itemDetails}>
-                  <Text style={styles.itemName}>{item.name}</Text>
-                  <Text style={styles.itemPrice}>${item.price}</Text>
-                  <Text style={styles.itemTotalPrice}>
-                    Total: ${item.totalPrice}
-                  </Text>
+            <View style={styles.itemContainer}>
+              <TouchableOpacity onPress={() => handleProductPress(item.id)}>
+                <View style={styles.cartItem}>
+                  <View style={styles.productImage}>
+                    <Image
+                      source={item.img}
+                      style={{ width: "100%", height: "100%" }}
+                      resizeMode="contain"
+                    />
+                  </View>
+                  <View key={item.id}>
+                    <View style={styles.itemDetails}>
+                      <Text style={styles.itemName}>{item.name}</Text>
+                      <Text style={styles.itemPrice}>${item.price}</Text>
+                      <Text style={styles.itemTotalPrice}>
+                        Total: ${item.totalPrice}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
-                <View style={styles.quantityContainer}>
-                  <TouchableOpacity
-                    onPress={() => handleDecreaseQuantity(item)}
-                    style={styles.quantityButton}
-                  >
-                    <Text style={styles.quantityButtonText}>-</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.quantityText}>{item.quantity}</Text>
-                  <TouchableOpacity
-                    onPress={() => handleIncreaseQuantity(item)}
-                    style={styles.quantityButton}
-                  >
-                    <Text style={styles.quantityButtonText}>+</Text>
-                  </TouchableOpacity>
-                </View>
+              </TouchableOpacity>
+              <View style={styles.quantityContainer}>
+                <TouchableOpacity onPress={() => handleRemoveItem(item)}>
+                  <FontAwesome name="trash" size={24} color="red" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => handleDecreaseQuantity(item)}
+                  style={styles.quantityButton}
+                >
+                  <Text style={styles.quantityButtonText}>-</Text>
+                </TouchableOpacity>
+                <Text style={styles.quantityText}>{item.quantity}</Text>
+                <TouchableOpacity
+                  onPress={() => handleIncreaseQuantity(item)}
+                  style={styles.quantityButton}
+                >
+                  <Text style={styles.quantityButtonText}>+</Text>
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
+            </View>
           ))
         )}
-        {cartItems.length > 0 && (
-          <View style={styles.totalCostContainer}>
-            <Text style={styles.totalCostTitle}>Order Summary</Text>
-            {cartItems.map((item) => (
-              <View key={item.id} style={styles.breakdownItem}>
-                <Text style={styles.breakdownText}>
-                  {item.name} x{item.quantity} = ${item.totalPrice}
-                </Text>
-              </View>
-            ))}
-            <View style={styles.totalCost}>
-              <Text style={styles.totalText}>Total Cost:</Text>
-              <Text style={styles.totalText}>${calculateTotal()}</Text>
-            </View>
-          </View>
-        )}
       </ScrollView>
-    </View>
+      {/* <View style={styles.stickyActionBar}>
+        <View style={styles.checkout}>
+          <View></View>
+          <TouchableOpacity style={styles.checkoutbtn}>
+          <Text style={styles.addToCartText}>checkout</Text>
+          </TouchableOpacity>
+        </View>
+      </View> */}
+    </ScrollView>
   );
 };
 
@@ -148,22 +159,11 @@ const styles = StyleSheet.create({
   },
   cartItem: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
-    marginBottom: 15,
-    padding: 15,
-    borderRadius: 8,
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 2,
+    gap: 20,
   },
-  itemDetails: {
-    flex: 1,
-    marginRight: 10,
-  },
+
   itemName: {
     fontSize: 18,
     fontWeight: "bold",
@@ -181,6 +181,8 @@ const styles = StyleSheet.create({
   },
   quantityContainer: {
     flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 20,
     alignItems: "center",
   },
   quantityButton: {
@@ -237,6 +239,48 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#333",
   },
+  productImage: {
+    width: 160,
+    height: 120,
+    borderRadius: 10,
+    // backgroundColor: "red",
+  },
+  itemContainer: {
+    marginBottom: 15,
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  stickyActionBar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems:"center",
+    height: 60,
+    width: "100%",
+    backgroundColor: "red",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    elevation: 5,
+  },
+  checkout: {
+    marginHorizontal:10,
+    flex:1,
+    height: 50,
+    backgroundColor:"blue"
+  },
+  checkoutbtn:{
+    height: 40,
+    width: "50%",
+    backgroundColor:"orange",
+    alignItems:'center',
+  }
 });
 
 export default Cart;

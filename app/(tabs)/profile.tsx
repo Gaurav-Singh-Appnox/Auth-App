@@ -11,7 +11,6 @@ const Profile = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     console.log("->");
-    
     dispatch(logOut());
   };
   return (
